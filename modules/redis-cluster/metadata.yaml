@@ -25,7 +25,7 @@ spec:
       repo: https://github.com/terraform-google-modules/terraform-google-memorystore.git
       sourceType: git
       dir: /modules/redis-cluster
-    version: 16.1.0
+    version: 1.0.7
     actuationTool:
       flavor: Terraform
       version: ">= 1.3"
@@ -154,7 +154,6 @@ spec:
       - name: cluster_role
         description: "The role of the cluster in cross cluster replication. Possible values are: NONE, PRIMARY, SECONDARY. Learn more at https://docs.cloud.google.com/application-design-center/docs/configure-memorystore-for-redis-cluster#cross_region_replication_parameters"
         varType: string
-        defaultValue: NONE
       - name: primary_cluster
         description: "primary cluster that is used as the replication source for this secondary cluster. This is allowed to be set only for clusters whose cluster role is of type SECONDARY. Format: projects/{project}/locations/{region}/clusters/{cluster-id}"
         varType: string
