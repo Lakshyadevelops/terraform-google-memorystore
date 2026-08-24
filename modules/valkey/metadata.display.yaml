@@ -97,6 +97,26 @@ spec:
         secondary_instance:
           name: secondary_instance
           title: Secondary Instance
+        server_ca_mode:
+          name: server_ca_mode
+          title: Server Ca Mode
+          enumValueLabels:
+            - label: Google Managed Per Instance CA
+              value: GOOGLE_MANAGED_PER_INSTANCE_CA
+            - label: Google Managed Shared CA
+              value: GOOGLE_MANAGED_SHARED_CA
+            - label: Customer Managed CAS CA
+              value: CUSTOMER_MANAGED_CAS_CA
+            - label: TLS Disabled
+              value: SERVER_CA_MODE_UNSPECIFIED
+          altDefaults:
+            - type: ALTERNATE_TYPE_DC
+              value: SERVER_CA_MODE_UNSPECIFIED
+        server_ca_pool:
+          name: server_ca_pool
+          title: Server Ca Pool
+          regexValidation: ^projects/((?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?)))/locations/((?:[a-z](?:[-a-z0-9]*[a-z0-9])?))/caPools/((?:[a-z](?:[-a-z0-9]*[a-z0-9])?))$
+          validation: Invalid format. Expected a valid Google Cloud CA Pool in the form of projects/{project_id}/locations/{location}/caPools/{ca_pool_id}.
         service_connection_policies:
           name: service_connection_policies
           title: Service Connection Policies

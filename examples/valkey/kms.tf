@@ -32,40 +32,19 @@ resource "random_string" "key_suffix" {
   upper   = false
 }
 
-resource "google_kms_key_ring" "keyring_region_central" {
+resource "google_kms_key_ring" "keyring_region_west" {
   project  = var.project_id
-  name     = "keyring-us-central1-${random_string.key_suffix.result}"
-  location = "us-central1"
+  name     = "keyring-us-west1-${random_string.key_suffix.result}"
+  location = "us-west1"
 }
 
-resource "google_kms_crypto_key" "key_region_central" {
-  name     = "key-us-central1-${random_string.key_suffix.result}"
-  key_ring = google_kms_key_ring.keyring_region_central.id
+resource "google_kms_crypto_key" "key_region_west" {
+  name     = "key-us-west1-${random_string.key_suffix.result}"
+  key_ring = google_kms_key_ring.keyring_region_west.id
 }
 
-
-resource "google_kms_crypto_key_iam_member" "memorystore_sa_iam" {
-  crypto_key_id = google_kms_crypto_key.key_region_central.id
-  role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
-  member        = "serviceAccount:${google_project_service_identity.memorystore_sa.email}"
-
-  depends_on = [time_sleep.wait_for_memorystore_sa_ready_state]
-}
-
-resource "google_kms_key_ring" "keyring_region_east" {
-  project  = var.project_id
-  name     = "keyring-us-east1-${random_string.key_suffix.result}"
-  location = "us-east1"
-}
-
-resource "google_kms_crypto_key" "key_region_east" {
-  name     = "key-us-east1-${random_string.key_suffix.result}"
-  key_ring = google_kms_key_ring.keyring_region_east.id
-}
-
-
-resource "google_kms_crypto_key_iam_member" "memorystore_sa_iam_east" {
-  crypto_key_id = google_kms_crypto_key.key_region_east.id
+resource "google_kms_crypto_key_iam_member" "memorystore_sa_iam_west" {
+  crypto_key_id = google_kms_crypto_key.key_region_west.id
   role          = "roles/cloudkms.cryptoKeyEncrypterDecrypter"
   member        = "serviceAccount:${google_project_service_identity.memorystore_sa.email}"
 

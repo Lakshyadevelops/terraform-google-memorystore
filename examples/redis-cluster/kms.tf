@@ -34,12 +34,12 @@ resource "random_string" "key_suffix" {
 
 resource "google_kms_key_ring" "keyring_region_central" {
   project  = var.project_id
-  name     = "keyring-us-central1-${random_string.key_suffix.result}"
-  location = "us-central1"
+  name     = "keyring-us-south1-${random_string.key_suffix.result}"
+  location = "us-south1"
 }
 
 resource "google_kms_crypto_key" "key_region_central" {
-  name     = "key-us-central1-${random_string.key_suffix.result}"
+  name     = "key-us-south1-${random_string.key_suffix.result}"
   key_ring = google_kms_key_ring.keyring_region_central.id
 }
 
