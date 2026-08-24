@@ -22,6 +22,7 @@ locals {
       "roles/iam.serviceAccountUser",
       "roles/logging.logWriter",
       "roles/cloudkms.cryptoKeyEncrypterDecrypter",
+      "roles/privateca.admin",
     ]
     redis-cluster = [
       "roles/redis.admin",

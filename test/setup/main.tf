@@ -19,6 +19,7 @@ locals {
     valkey = [
       "redis.googleapis.com",
       "cloudkms.googleapis.com",
+      "privateca.googleapis.com",
       "serviceusage.googleapis.com",
     ]
     redis-cluster = [
