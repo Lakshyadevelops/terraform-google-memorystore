@@ -97,6 +97,12 @@ spec:
         secondary_instance:
           name: secondary_instance
           title: Secondary Instance
+        server_ca_mode:
+          name: server_ca_mode
+          title: Server Ca Mode
+        server_ca_pool:
+          name: server_ca_pool
+          title: Server Ca Pool
         service_connection_policies:
           name: service_connection_policies
           title: Service Connection Policies
