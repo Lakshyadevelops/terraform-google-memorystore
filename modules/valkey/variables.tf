@@ -96,7 +96,7 @@ variable "engine_version" {
 }
 
 variable "enable_apis" {
-  description = "Flag for enabling memcache.googleapis.com in your project"
+  description = "Flag for enabling memorystore.googleapis.com in your project"
   type        = bool
   default     = false
 }
@@ -216,7 +216,7 @@ variable "kms_key" {
 }
 
 variable "server_ca_mode" {
-  description = "The Server CA mode of the instance. Possible values: GOOGLE_MANAGED_PER_INSTANCE_CA, GOOGLE_MANAGED_SHARED_CA, CUSTOMER_MANAGED_CAS_CA, SERVER_CA_MODE_UNSPECIFIED"
+  description = "The Server CA mode of the instance. Possible values: GOOGLE_MANAGED_PER_INSTANCE_CA, GOOGLE_MANAGED_SHARED_CA, CUSTOMER_MANAGED_CAS_CA, null"
   type        = string
   default     = null
 

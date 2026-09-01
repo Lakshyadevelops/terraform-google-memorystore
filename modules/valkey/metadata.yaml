@@ -25,7 +25,7 @@ spec:
       repo: https://github.com/terraform-google-modules/terraform-google-memorystore.git
       sourceType: git
       dir: /modules/valkey
-    version: 16.1.1
+    version: 1.0.13
     actuationTool:
       flavor: Terraform
       version: ">= 1.3"
@@ -100,7 +100,7 @@ spec:
         varType: string
         defaultValue: VALKEY_8_0
       - name: enable_apis
-        description: Flag for enabling memcache.googleapis.com in your project
+        description: Flag for enabling memorystore.googleapis.com in your project
         varType: bool
         defaultValue: false
       - name: network
@@ -185,18 +185,22 @@ spec:
         description: The KMS key used to encrypt the at-rest data of the cluster
         varType: string
       - name: server_ca_mode
-        description: "The Server CA mode of the instance. Possible values: GOOGLE_MANAGED_PER_INSTANCE_CA, GOOGLE_MANAGED_SHARED_CA, CUSTOMER_MANAGED_CAS_CA, SERVER_CA_MODE_UNSPECIFIED"
+        description: "The Server CA mode of the instance. Possible values: GOOGLE_MANAGED_PER_INSTANCE_CA, GOOGLE_MANAGED_SHARED_CA, CUSTOMER_MANAGED_CAS_CA, TLS_DISABLED"
         varType: string
       - name: server_ca_pool
         description: "The customer-managed CA pool resource name. Format: projects/{project}/locations/{location}/caPools/{caPoolId}"
         varType: string
     outputs:
+      - name: apphub_service_uri
+        description: Service URI in CAIS style to be used by Apphub.
       - name: available_maintenance_versions
         description: This field is used to determine the available maintenance versions for the self service update
       - name: discovery_endpoints
         description: (Deprecated) Endpoints created on each given network, for valkey clients to connect to the cluster. Currently only one endpoint is supported. Use endpoints instead
       - name: endpoints
         description: Endpoints for the instance
+      - name: env_vars
+        description: Environment variables for Valkey instance connection, including address and port.
       - name: id
         description: The valkey cluster instance ID
       - name: psc_auto_connection
