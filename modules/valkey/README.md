@@ -77,9 +77,11 @@ module "valkey_cluster" {
 
 | Name | Description |
 |------|-------------|
+| apphub\_service\_uri | Service URI in CAIS style to be used by Apphub. |
 | available\_maintenance\_versions | This field is used to determine the available maintenance versions for the self service update |
 | discovery\_endpoints | (Deprecated) Endpoints created on each given network, for valkey clients to connect to the cluster. Currently only one endpoint is supported. Use endpoints instead |
 | endpoints | Endpoints for the instance |
+| env\_vars | Environment variables for Valkey instance connection, including address and port. |
 | id | The valkey cluster instance ID |
 | psc\_auto\_connection | Detailed information of a PSC connection that is created through service connectivity automation |
 | psc\_connections | (Deprecated) PSC connections for discovery of the cluster topology and accessing the cluster. Use psc\_auto\_connection instead |
