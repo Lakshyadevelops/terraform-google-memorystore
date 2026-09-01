@@ -44,7 +44,7 @@ module "valkey_cluster" {
 | authorization\_mode | The Immutable. Authorization mode of the instance. Possible values: AUTH\_DISABLED IAM\_AUTH | `string` | `"AUTH_DISABLED"` | no |
 | automated\_backup\_config | The automated backup config for a instance | <pre>object({<br>    start_time = string<br>    retention  = string<br>  })</pre> | `null` | no |
 | deletion\_protection\_enabled | If set to true deletion of the instance will fail | `bool` | `true` | no |
-| enable\_apis | Flag for enabling memcache.googleapis.com in your project | `bool` | `false` | no |
+| enable\_apis | Flag for enabling memorystore.googleapis.com in your project | `bool` | `false` | no |
 | engine\_configs | User-provided engine configurations for the instance | <pre>object({<br>    maxmemory               = optional(string)<br>    maxmemory-clients       = optional(string)<br>    maxmemory-policy        = optional(string)<br>    notify-keyspace-events  = optional(string)<br>    slowlog-log-slower-than = optional(number)<br>    maxclients              = optional(number)<br>  })</pre> | `null` | no |
 | engine\_version | Engine version of the instance | `string` | `"VALKEY_8_0"` | no |
 | gcs\_source | GCS source for the instance. Format gs://bucket1/object1, gs://bucket2/folder2/object2 | `string` | `null` | no |
@@ -77,9 +77,11 @@ module "valkey_cluster" {
 
 | Name | Description |
 |------|-------------|
+| apphub\_service\_uri | Service URI in CAIS style to be used by Apphub. |
 | available\_maintenance\_versions | This field is used to determine the available maintenance versions for the self service update |
 | discovery\_endpoints | (Deprecated) Endpoints created on each given network, for valkey clients to connect to the cluster. Currently only one endpoint is supported. Use endpoints instead |
 | endpoints | Endpoints for the instance |
+| env\_vars | Environment variables for Valkey instance connection, including address and port. |
 | id | The valkey cluster instance ID |
 | psc\_auto\_connection | Detailed information of a PSC connection that is created through service connectivity automation |
 | psc\_connections | (Deprecated) PSC connections for discovery of the cluster topology and accessing the cluster. Use psc\_auto\_connection instead |

@@ -96,7 +96,7 @@ variable "engine_version" {
 }
 
 variable "enable_apis" {
-  description = "Flag for enabling memcache.googleapis.com in your project"
+  description = "Flag for enabling memorystore.googleapis.com in your project"
   type        = bool
   default     = false
 }
