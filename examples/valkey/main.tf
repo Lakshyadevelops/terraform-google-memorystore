@@ -29,18 +29,19 @@ module "enable_apis" {
     "serviceconsumermanagement.googleapis.com",
     "networkconnectivity.googleapis.com",
     "compute.googleapis.com",
+    "privateca.googleapis.com",
   ]
 }
 
+module "valkey_cluster_south1" {
+  source  = "../../modules/valkey"
 
-module "valkey_cluster_central1" {
-  source  = "terraform-google-modules/memorystore/google//modules/valkey"
-  version = "~> 16.0"
+  instance_id             = "test-valkey-cluster-south1"
+  project_id              = var.project_id
+  location                = "us-south1"
+  node_type               = "STANDARD_SMALL"
+  transit_encryption_mode = "SERVER_AUTHENTICATION"
 
-  instance_id                 = "test-valkey-cluster-central1"
-  project_id                  = var.project_id
-  location                    = "us-central1"
-  node_type                   = "HIGHMEM_MEDIUM"
   deletion_protection_enabled = false
   engine_version              = "VALKEY_8_0"
 
@@ -49,8 +50,8 @@ module "valkey_cluster_central1" {
   service_connection_policies = {
     test-net-valkey-cluster-scp = {
       subnet_names = [
-        "valkey-subnet-100",
-        "valkey-subnet-101",
+        "valkey-subnet-200",
+        "valkey-subnet-201",
       ]
     }
   }
@@ -87,15 +88,17 @@ module "valkey_cluster_central1" {
 }
 
 module "valkey_cluster_east1" {
-  source  = "terraform-google-modules/memorystore/google//modules/valkey"
-  version = "~> 16.0"
+  source  = "../../modules/valkey"
 
-  instance_id                 = "test-valkey-cluster-east1"
-  project_id                  = var.project_id
-  location                    = "us-east1"
-  node_type                   = "HIGHMEM_MEDIUM"
+  instance_id             = "test-valkey-cluster-east1"
+  project_id              = var.project_id
+  location                = "us-east1"
+  node_type               = "STANDARD_SMALL"
+  transit_encryption_mode = "SERVER_AUTHENTICATION"
+
   deletion_protection_enabled = false
   engine_version              = "VALKEY_8_0"
+  server_ca_mode              = "GOOGLE_MANAGED_SHARED_CA"
 
   network = local.network_name
 
@@ -107,7 +110,7 @@ module "valkey_cluster_east1" {
     }
   }
   instance_role    = "SECONDARY"
-  primary_instance = module.valkey_cluster_central1.id
+  primary_instance = module.valkey_cluster_south1.id
 
   persistence_config = {
     mode = "RDB"
@@ -137,6 +140,66 @@ module "valkey_cluster_east1" {
     module.test_vpc,
     module.enable_apis,
     google_project_iam_member.network_connectivity_sa,
-    module.valkey_cluster_central1,
+    module.valkey_cluster_south1,
+  ]
+}
+
+module "valkey_cluster_west1" {
+  source  = "../../modules/valkey"
+
+  instance_id             = "test-valkey-cluster-west1"
+  project_id              = var.project_id
+  location                = "us-west1"
+  node_type               = "STANDARD_SMALL"
+  transit_encryption_mode = "SERVER_AUTHENTICATION"
+
+  deletion_protection_enabled = false
+  engine_version              = "VALKEY_8_0"
+  server_ca_mode              = "CUSTOMER_MANAGED_CAS_CA"
+
+  server_ca_pool = google_privateca_ca_pool.ca_pool_region_west.id
+  kms_key        = google_kms_crypto_key.key_region_west.id
+
+  network = local.network_name
+
+  service_connection_policies = {
+    test-net-valkey-cluster-scp = {
+      subnet_names = [
+        "valkey-subnet-103",
+      ]
+    }
+  }
+
+  persistence_config = {
+    mode = "RDB"
+    rdb_config = {
+      rdb_snapshot_period     = "ONE_HOUR"
+      rdb_snapshot_start_time = "2024-10-02T15:01:23Z"
+    }
+  }
+
+  engine_configs = {
+    maxmemory-policy = "volatile-ttl"
+  }
+
+  weekly_maintenance_window = [
+    {
+      day_of_week     = "MONDAY"
+      start_time_hour = "23"
+    }
+  ]
+
+  automated_backup_config = {
+    start_time = "20"
+    retention  = "86400s"
+  }
+
+  depends_on = [
+    module.test_vpc,
+    module.enable_apis,
+    google_project_iam_member.network_connectivity_sa,
+    google_privateca_certificate_authority.ca_west_authority,
+    google_kms_crypto_key_iam_member.memorystore_sa_iam_west,
+    time_sleep.wait_for_ca_pool_iam_propagation,
   ]
 }

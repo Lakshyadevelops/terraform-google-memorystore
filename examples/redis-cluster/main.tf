@@ -39,7 +39,7 @@ module "redis_cluster_central" {
 
   name                        = "test-redis-cluster-central"
   project_id                  = var.project_id
-  region                      = "us-central1"
+  region                      = "us-south1"
   network                     = ["projects/${var.project_id}/global/networks/${local.network_name}"]
   node_type                   = "REDIS_STANDARD_SMALL"
   deletion_protection_enabled = false
@@ -51,8 +51,8 @@ module "redis_cluster_central" {
       network_name    = local.network_name
       network_project = var.project_id
       subnet_names = [
-        "subnet-us-central1-100",
-        "subnet-us-central1-101",
+        "subnet-us-south1-200",
+        "subnet-us-south1-201",
       ]
     }
   }

@@ -184,6 +184,12 @@ spec:
       - name: kms_key
         description: The KMS key used to encrypt the at-rest data of the cluster
         varType: string
+      - name: server_ca_mode
+        description: "The Server CA mode of the instance. Possible values: GOOGLE_MANAGED_PER_INSTANCE_CA, GOOGLE_MANAGED_SHARED_CA, CUSTOMER_MANAGED_CAS_CA, SERVER_CA_MODE_UNSPECIFIED"
+        varType: string
+      - name: server_ca_pool
+        description: "The customer-managed CA pool resource name. Format: projects/{project}/locations/{location}/caPools/{caPoolId}"
+        varType: string
     outputs:
       - name: available_maintenance_versions
         description: This field is used to determine the available maintenance versions for the self service update
@@ -213,4 +219,4 @@ spec:
       - serviceusage.googleapis.com
     providerVersions:
       - source: hashicorp/google
-        version: ">= 6.30, < 7"
+        version: ">= 7.24, < 8"

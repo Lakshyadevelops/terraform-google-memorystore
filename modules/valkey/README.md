@@ -64,6 +64,8 @@ module "valkey_cluster" {
 | project\_id | The ID of the project in which the resource belongs to. | `string` | n/a | yes |
 | replica\_count | Number of replica nodes per shard. If omitted the default is 0 replicas | `number` | `0` | no |
 | secondary\_instance | List of secondary instances that are replicating from this primary instance. This is allowed to be set only for instances whose instance role is of type PRIMARY. Format: projects/{project}/locations/{region}/instances/{instance-id} | `list(string)` | `[]` | no |
+| server\_ca\_mode | The Server CA mode of the instance. Possible values: GOOGLE\_MANAGED\_PER\_INSTANCE\_CA, GOOGLE\_MANAGED\_SHARED\_CA, CUSTOMER\_MANAGED\_CAS\_CA, SERVER\_CA\_MODE\_UNSPECIFIED | `string` | `null` | no |
+| server\_ca\_pool | The customer-managed CA pool resource name. Format: projects/{project}/locations/{location}/caPools/{caPoolId} | `string` | `null` | no |
 | service\_connection\_policies | The Service Connection Policies to create. Required to create service connection policy. Not needed if service connection policy already exist | <pre>map(object({<br>    subnet_names = list(string)<br>    description  = optional(string)<br>    limit        = optional(number)<br>    labels       = optional(map(string), {})<br>  }))</pre> | `{}` | no |
 | shard\_count | Number of shards for the instance | `number` | `3` | no |
 | transit\_encryption\_mode | Immutable. In-transit encryption mode of the instance. Possible values: TRANSIT\_ENCRYPTION\_DISABLED SERVER\_AUTHENTICATION | `string` | `"TRANSIT_ENCRYPTION_DISABLED"` | no |

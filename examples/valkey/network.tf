@@ -27,19 +27,24 @@ module "test_vpc" {
 
   subnets = [
     {
-      subnet_name   = "valkey-subnet-100"
-      subnet_ip     = "10.10.100.0/24"
-      subnet_region = "us-central1"
+      subnet_name   = "valkey-subnet-200"
+      subnet_ip     = "10.10.200.0/24"
+      subnet_region = "us-south1"
     },
     {
-      subnet_name   = "valkey-subnet-101"
-      subnet_ip     = "10.10.101.0/24"
-      subnet_region = "us-central1"
+      subnet_name   = "valkey-subnet-201"
+      subnet_ip     = "10.10.201.0/24"
+      subnet_region = "us-south1"
     },
     {
       subnet_name   = "valkey-subnet-102"
       subnet_ip     = "10.10.102.0/24"
       subnet_region = "us-east1"
+    },
+    {
+      subnet_name   = "valkey-subnet-103"
+      subnet_ip     = "10.10.103.0/24"
+      subnet_region = "us-west1"
     },
   ]
 }

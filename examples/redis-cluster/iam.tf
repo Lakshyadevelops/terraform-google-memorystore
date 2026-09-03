@@ -25,7 +25,13 @@ resource "google_project_service_identity" "network_connectivity_sa" {
 }
 
 resource "google_project_iam_member" "network_connectivity_sa" {
-  project = var.project_id
-  role    = "roles/networkconnectivity.serviceAgent"
-  member  = "serviceAccount:${google_project_service_identity.network_connectivity_sa.email}"
+  project    = var.project_id
+  role       = "roles/networkconnectivity.serviceAgent"
+  member     = "serviceAccount:${google_project_service_identity.network_connectivity_sa.email}"
+  depends_on = [time_sleep.wait_for_network_connectivity_sa_ready_state]
+}
+
+resource "time_sleep" "wait_for_network_connectivity_sa_ready_state" {
+  create_duration = "30s"
+  depends_on      = [google_project_service_identity.network_connectivity_sa]
 }

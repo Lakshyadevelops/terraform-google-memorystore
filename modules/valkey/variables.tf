@@ -214,3 +214,21 @@ variable "kms_key" {
   type        = string
   default     = null
 }
+
+variable "server_ca_mode" {
+  description = "The Server CA mode of the instance. Possible values: GOOGLE_MANAGED_PER_INSTANCE_CA, GOOGLE_MANAGED_SHARED_CA, CUSTOMER_MANAGED_CAS_CA, SERVER_CA_MODE_UNSPECIFIED"
+  type        = string
+  default     = null
+
+  validation {
+    condition     = var.server_ca_mode == null ? true : contains(["GOOGLE_MANAGED_PER_INSTANCE_CA", "GOOGLE_MANAGED_SHARED_CA", "CUSTOMER_MANAGED_CAS_CA", "SERVER_CA_MODE_UNSPECIFIED"], var.server_ca_mode)
+    error_message = "Allowed values for server_ca_mode are \"GOOGLE_MANAGED_PER_INSTANCE_CA\", \"GOOGLE_MANAGED_SHARED_CA\", \"CUSTOMER_MANAGED_CAS_CA\", or null."
+  }
+}
+
+variable "server_ca_pool" {
+  description = "The customer-managed CA pool resource name. Format: projects/{project}/locations/{location}/caPools/{caPoolId}"
+  type        = string
+  default     = null
+}
+
