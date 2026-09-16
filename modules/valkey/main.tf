@@ -129,9 +129,16 @@ resource "google_memorystore_instance" "valkey_cluster" {
   }
 
   depends_on = [
-    google_network_connectivity_service_connection_policy.service_connection_policies,
+    time_sleep.wait_30_seconds,
     module.enable_apis,
   ]
+}
+
+
+resource "time_sleep" "wait_30_seconds" {
+  depends_on = [google_network_connectivity_service_connection_policy.service_connection_policies]
+
+  destroy_duration = "30s"
 }
 
 resource "google_network_connectivity_service_connection_policy" "service_connection_policies" {
