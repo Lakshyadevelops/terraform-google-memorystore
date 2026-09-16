@@ -73,7 +73,7 @@ steps:
     args: ['/bin/bash', '-c', 'cft test run TestRedisCluster --stage teardown --verbose --test-dir test/integration']
   - id: converge-TestValkeyCluster
     waitFor:
-      - destroy-TestRedisCluster
+      - create
     name: 'gcr.io/cloud-foundation-cicd/$_DOCKER_IMAGE_DEVELOPER_TOOLS:$_DOCKER_TAG_VERSION_DEVELOPER_TOOLS'
     args: ['/bin/bash', '-c', 'cft test run TestValkeyCluster --stage apply --verbose --test-dir test/integration']
   - id: verify-TestValkeyCluster
